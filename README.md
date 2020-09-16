@@ -101,6 +101,8 @@ val point = new Point(y=1)
 class Point(x: Int)
 ```
 
+# トレイト
+
 
 
 
