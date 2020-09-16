@@ -1,27 +1,7 @@
 object TourOfScala extends App {
   println("===================")
-  trait Iterator[A] {
-    def hasNext: Boolean
-    def next(): A
-  }
+  val str = 12
+  println(s"aa ${str}")
 
-  class IntIterator(to: Int) extends Iterator[Int] {
-    private var current = 0
-
-    override def hasNext: Boolean = current < to
-
-    override def next(): Int = {
-      if (hasNext) {
-        val t = current
-        current += 1
-        t
-      } else 0
-    }
-  }
-
-  val iterator = new IntIterator(10)
-  println(iterator.next())
-  println(iterator.next())
-  println(iterator.next())
   println("===================")
 }

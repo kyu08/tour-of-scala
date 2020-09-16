@@ -110,12 +110,40 @@ class Point(x: Int)
 - メソッドから複数の値を返す時に役に立つ
 こう書く
 ```scala
-val ingredient = ("s", 10)
+val tuple = ("s", 10)
 ```
 
+## 要素へのアクセス
+```scala
+println(tuple._1) // 添字は1スタート(!)
+```
 
+## タプルでのパターンマッチング
+### 1. 
+```scala
+val (name, age) = tuple
+```
+### 2. 
+```scala
+val planets = List(("Mercury", 123), ("Venus", 122), ("Earth", 123123))
+planets.foreach{
+	case ("Earth", 123123) => println(s"our planet is $distance million hogehoge")
+	case _ =>
+}
+```
 
+### ちなみに
+println で文字列の中で変数展開をしたい場合はこう。`string`だから`s`ってわけではないっぽい。(`Int`でも`s`だったので)
+```scala
+val vvv = "hogehogehoge"
+val hoge = s"this is variable $vvv" // ${vvv} として同じように動作する。違いはわからん。
+```
 
+## タプルとケースクラス
+この2つの使い分けで迷うかもしれないけど、ケースクラスには名前つき要素があるので可読性改善に繋がる可能性があるよ。たとえば↑の惑星の例も↓のようにした方が読みやすいよね
+```scala
+case class Planet(name: String, distance: Double)
+```
 
 
 
