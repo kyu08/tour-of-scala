@@ -59,12 +59,20 @@ val newId: Int = IdFactory.create() // 1
 ## メインメソッド
 メインメソッドがプログラムの始点になる。JVMは`main`と名付けられたメインメソッドが必要で、それは文字列の配列を1つ引数として受け取る。
 
+# 統合された型
+![type](https://docs.scala-lang.org/resources/images/tour/unified-types-diagram.svg)
+## Scalaの型階層
+`Any`は全ての型のスーパータイプ。`equals`, `hashCode`, `toString`などを定義している。
+`AnyVal`は値型に相当する。9つの値型が存在し、それら`Double`、`Float`、`Long`、`Int`、`Short`、`Byte`、`Char`、`Unit`、`Boolean`は`null`非許容である。(!)
 
+`AnyRef`は参照型を意味する。全ての値型でない型は参照型として定義される。(`List`,`Option`,`YourClass`)
+ユーザ定義型は`AnyRef`のサブタイプになる。
 
-
-
-
-
+![cast](https://docs.scala-lang.org/resources/images/tour/type-casting-diagram.svg)
+精度が高い -> 低い の方向にはキャストできない。
+`Nothing`はすべての型のサブタイプであり、ボトム型とも呼ばれる(TSの`never`?)
+`Nothing`型を持つ値は存在しない。
+`Null`はほとんどの場合、使われるべきではない。
 
 
 
