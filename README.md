@@ -149,6 +149,20 @@ case class Planet(name: String, distance: Double)
 ミックスイン -> クラスを構成するのに使われるトレイト
 ミックスインをうまく使うととても柔軟にコードがかけるね
 
+# 高階関数
+```scala
+val hoge = Seq(100, 200, 300)
+val doubleHoge = hoge.map(h => h * 2)
+// equals
+val doubleHoge = hoge.map(_ * 2)
+```
+関数を返す関数
+```scala
+def urlBuilder(ssl: Boolean, domainName: String): (String, String) => String = {
+  val schema = if (ssl) "https://" else "http://"
+  (endpoint: String, query: String) => s"$schema$domainName/$endpoint?$query"
+}
+```
 
 
 
