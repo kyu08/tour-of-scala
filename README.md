@@ -164,6 +164,8 @@ def urlBuilder(ssl: Boolean, domainName: String): (String, String) => String = {
 }
 ```
 
+# ネストしたメソッド
+メソッド内でメソッドを定義することもできるよ
 
 
 
