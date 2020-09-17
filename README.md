@@ -145,7 +145,9 @@ val hoge = s"this is variable $vvv" // ${vvv} として同じように動作す�
 case class Planet(name: String, distance: Double)
 ```
 
-
+# ミックスインを用いたクラス合成
+ミックスイン -> クラスを構成するのに使われるトレイト
+ミックスインをうまく使うととても柔軟にコードがかけるね
 
 
 
