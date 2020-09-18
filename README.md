@@ -167,6 +167,55 @@ def urlBuilder(ssl: Boolean, domainName: String): (String, String) => String = {
 # ネストしたメソッド
 メソッド内でメソッドを定義することもできるよ
 
+# カリー化
+## foldLeft
+```scala
+def foldLeft[B](z: B)(op: (b, A) => B): B
+```
+
+```scala
+val numbers = List(1, 2, 3, 4, 5)
+val res = numbers.foldLeft(0)((n, m) => n + m)
+// equals
+val res = numbers.foldLeft(0, (n: Int, m: Int) => n + m)
+// equals
+val res = numbers.foldLeft(0)(_ + _)
+println(res)  // 15
+```
+
+複数パラメータリストを使うことでScalaの型インターフェースの利点を享受できるので`foldLeft(0)(_ + _)`のようにかける
+
+### :+
+リストの最後の要素を付け加えたリストを求める
+```scala
+list :+ 3 // List(1,4,7,3)
+```
+
+## 暗黙のパラメータ
+### 疑問
+ここわかりません！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
