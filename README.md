@@ -330,7 +330,31 @@ object Email {
 # 正規表現
 `.r`メソッドを使うことでどんな文字列も正規表現に変換できる。
 
+# 抽出子オブジェクト
+`unapply`メソッドをもつ。
+`apply`メソッドが引数をとってオブジェクトを返すように、`unapply`メソッドは1つのオブジェクトを受け取り、引数を返そうとする。(`apply`の逆みたいなイメージなのかな)
+パターンマッチングと部分関数で最も頻繁に使われる。
 
+```scala
+object CustomerID {
+
+  def apply(name: String) = s"$name--${Random.nextLong}"
+
+  def unapply(customerID: String): Option[String] = {
+    val stringArray: Array[String] = customerID.split("--")
+    if (stringArray.tail.nonEmpty) Some(stringArray.head) else None
+  }
+}
+```
+
+## `unapply`メソッドの使い方
+```scala
+val customer2ID = CustomerID("nico")
+val CustomerID(name) = customer2ID
+// const { name } = john; みたいなことだと思う
+// ここ以降で `name` が利用できるようになる
+println(name) // "nico" 
+```
 
 
 
