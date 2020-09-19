@@ -248,12 +248,84 @@ hoge match {
 トレイト、クラスに`seald`をつけると、全てのサブタイプは同一ファイル内で宣言されなければならなくなる。
 同一ファイルないでしか継承されないので読みやすい。
 
+# シングルトンオブジェクト
+トップレベルにあるオブジェクトはシングルトン
+クラスのメンバやローカル変数としてのオブジェクトは`lazy val`のように参照された際に生成される。
+
+## シングルトンオブジェクトの定義
+**オブジェクトは値**である。
+```scala
+object Box
+```
+
+`package`宣言をすることでどこからでもimportできるようになる
+
+```scala
+// 定義元
+package logging
+
+object Logger {
+  def info(message: String): Unit = println(message)
+}
+
+// 呼び出し(別ファイル)
+import logging.Logger.info
+
+class Project(name: String)
+
+class Test {
+  info("hogehoge")
+}
+```
+
+## コンパニオンオブジェクト
+クラスと同じ名前のオブジェクトは**コンパニオンオブジェクト**と呼ばれる。逆にそのクラスはコンパニオンクラスと呼ばれる。コンパニオンオブジェクトやコンパニオンクラスは自身のコンパニオンのプライベートメンバにアクセスできる。インスタンスから呼ばれる必要がないメソッドや変数はコンパニオンオブジェクトを使おう。
+
+### 疑問
+↓の`import Circle._`ってなに
+```scala
+import scala.math._
+
+case class Circle(radius: Double) {
+  import Circle._
+  def area: Double = calculateArea(radius)
+}
+
+object Circle {
+  private def calculateArea(radius: Double): Double = Pi * pow(radius, 2.0)
+}
+
+val circle1 = Circle(5.0)
+
+circle1.area
+```
+
+### 複数行文字列
+```scala
+s"""
+       |
+       |waiwai
+       |aa
+       |aa
+       |""".stripMargin
+```
+
+## Optionをつかったファクトリーメソッドの書き方
+Option使うのいいなと思った
+```scala
+class Email(val username: String, val domainName: String)
+
+object Email {
+  def fromString(emailString: String): Option[Email] = {
+    emailString.split('@') match {
+      case Array(a, b) => Some(new Email(a, b))
+      case _ => None
+    }
+  }
+}
 
 
-
-
-
-
+```
 
 
 
