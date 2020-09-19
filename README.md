@@ -224,7 +224,29 @@ val taro = john.copy(name = "taro")  // copyしたいパラメータは指定し
 シャローコピー -> 参照を共有
 ディープコピー -> 参照は共有しない。別のオブジェクトとしてコピー
 
+# パターンマッチング
+### 変数展開 in 文字列
+`hoge.hogehoge`の形の時は`{}`で囲まないとだめやで
+```scala
+case class Hoge(name: String, age: Int)
+var hoge = Hoge("taro", 4)
 
+s"{hoge.name}" // "taro"
+s"hoge.name" // Hoge("taro", 4).name
+```
+
+## 型のみでもマッチングできるよ
+```scala
+...
+hoge match {
+  t: Toyota => t
+  m: Matsuda => m
+}
+
+```
+## シールドクラス
+トレイト、クラスに`seald`をつけると、全てのサブタイプは同一ファイル内で宣言されなければならなくなる。
+同一ファイルないでしか継承されないので読みやすい。
 
 
 
