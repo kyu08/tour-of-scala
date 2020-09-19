@@ -1,5 +1,8 @@
 object TourOfScala extends App {
   println("===================")
-  println(List(1, 2, 3).tail)
+  def hoge() =
+    for(i <- 0 until 2; j <- 0 until 3) (i, j)
+  val res = hoge()
+  println(res)
   println("===================")
 }

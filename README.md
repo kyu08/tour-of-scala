@@ -356,12 +356,35 @@ val CustomerID(name) = customer2ID
 println(name) // "nico" 
 ```
 
+## unapplyの戻り値の型に関する注意
+- ただのテストであれば`Boolean`を返そう
+- 
 
+# For 内包表記
+シーケンス内包表記を表現するための軽量な記法。
+`for(enumerators) yield e`という形をとる。
+`enumerators`はセミコロンで区切られたEnumeratorのリストをさす。
+1つのenumeratorは、新しい変数を導き出すジェネレータかフィルタのどちらか。
+内包表記はenumeratorが生成する束縛1つ1つについて本体`e`を評価し、これらの値のシーケンスを返す。
 
+```scala
+case class Person(name: String, age: Int)
+val userBase = List(Person("john", 34), Person("taro", 4), Person("jiro", 66))
+val adult = for(user <- userBase if (user.age > 10 && user.age < 60)) yield user.name
+adult.foreach(u => println(u)) // john
+```
+`user <- userBase`が**ジェネレータ**で`if ~~`が**フィルター**。
 
+## インクリメントのされ方
+```scala
+for (i <- 0 until n;
+        j <- 0 until n if i + j == v)
+   yield (i, j)
+```
 
+ってあったらjのインクリメントが終わったらiが1インクリメントされる。
 
-
+`yield`は`return`みたいなやつなので、for式から値を返す必要がないときはかかなくてよい。
 
 
 
