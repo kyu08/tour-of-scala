@@ -466,10 +466,30 @@ val cat: Cat = catContainer.getValue
 ```
 みたいなこと(`Dog`を`Cat`に割り当ててしまう)が可能になってしまう。
 
-### 他の例
 
+# 上限型境界
+型パラメータと抽象型メンバには**型境界による制約**をかけることができる。
+型境界は書いた変数に入れられる具象型を制限して、時にはそれらの型のメンバについてより多くの情報を与える。
+上限型境界 `T <: A`は型変数`T`が型`A`のサブタイプであるという宣言。
 
+```scala
+abstract class Animal {}
+abstract class Pet extends Animal {}
+class Cat extends Pet {}
+class Dog extends Pet {}
+class Lion extends Animal {}
 
+class PetContainer[P <: Pet](p: P) {
+  def pet: P = p
+}
+
+// ok
+val dogContainer = new PetContainer[Dog](new Dog)
+// ok
+val catContainer = new PetContainer[Cat](new Cat)
+// compile error
+val lionContainer = new PetContainer[Lion](new Lion)
+```
 
 
 
