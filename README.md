@@ -491,6 +491,11 @@ val catContainer = new PetContainer[Cat](new Cat)
 val lionContainer = new PetContainer[Lion](new Lion)
 ```
 
+# 下限型境界
+上限型境界は型を別の型のサブタイプに制限するけど、下限型境界は型が別の型のスーパータイプであることを宣言する。
+`B >: A` -> パラメータ`B`または抽象型`B`が型`A`のスーパータイプであることを表す。
+
+例よくわかんなかった
 
 
 
