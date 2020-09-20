@@ -6,6 +6,7 @@ Tour of Scala(https://docs.scala-lang.org/ja/tour/tour-of-scala.html)
 ブロックの最後に指揮の結果はブロック全体の結果になる
 ## 関数
 ```Scala
+// 無名関数
 (x: Int) => x + 1
 // 名前をつけることもできる
 val add = (x: Int) => x + 1
@@ -385,6 +386,102 @@ for (i <- 0 until n;
 ってあったらjのインクリメントが終わったらiが1インクリメントされる。
 
 `yield`は`return`みたいなやつなので、for式から値を返す必要がないときはかかなくてよい。
+
+# 変位指定
+複合型の間の継承関係とそれらの型パラメータ間の継承関係の相関です(?)
+
+```scala
+class Foo[+A] // 共変クラス
+class Foo[-A] // 反変クラス
+class Foo[A] // 非変クラス
+```
+
+## 共変
+ジェネリッククラスの型パラメータ`A`は`class Foo[+A]`と書くと共変クラスにできる。このとき、`A`が`B`のサブタイプであるような`A`と`B`に対して、`List[A]`が`List[B]`のサブタイプであることを示す。
+### たとえば
+```scala
+abstract class Animal{
+  def name: String
+}
+case class Dog(name: String) extends Animal
+case class Cat(name: String) extends Animal
+```
+のとき、`List[Cat]`も`List[Dog]`も`List[Animal]`の代わりにできる。 this is 共変。
+## 反変
+`class Foo[-A]`って書くと反変にできる。
+**共変の反対の意味のサブタイプ関係**を作る。
+`A`が`B`のサブタイプであるような`A`と`B`に対して、`Writer[B]`が`Writer[A]`のサブタイプであることを示す。
+↑の`Cat`, `Dog`, `Animal`クラスを使って説明すると、
+
+```scala
+abstract class Printer[-A] {
+  def print(value: A): Unit
+}
+
+class AnimalPrinter extends Printer[Animal] {
+  def print(animal: Animal): Unit =
+    println("THe animal's name is: " + animal.name)
+}
+class CatPrinter extends Printer[Cat] {
+  def print(cat: Cat): Unit =
+    println("THe cat's name is: " + cat.name)
+}
+```
+`Printer[Cat]`はコンソールに任意の`Cat`をプリントする方法を知っていて、`Printer[Animal]`も、コンソールに任意の`Animal`をプリントする方法を知っている。ここでは、`Printer[Animal]`も任意の`Cat`をプリントする方法を知っている。逆の関係性は成り立たない。(`Printer[Cat]`は`Animal`をコンソールにプリントする方法を知らない)
+したがって、必要であれば、`Printer[Animal]`を`Printer[Cat]`の代わりに使うことができる。これは、`Printer[A]`が反変であるからこそ可能。
+```scala
+object ContravarianceTest extends App {
+  val myCat: Cat = Cat("Boots")
+  
+  def printMyCat(printer: Printer[Cat]): Unit = {
+    printer.print(myCat)
+  }
+
+  val catPrinter: Printer[Cat] = new CatPrinter
+  val animalPrinter: Printer[Animal] = new AnimalPrinter
+
+  printMyCat(CatPrinter) // The cat's name is: Boots
+  printMyCat(AnimalPrinter) // The animal's name is: Boots
+}
+```
+
+## 非変
+scalaのジェネリッククラスは標準では非変。これは、**共変でも反変でもない**ことを意味する。
+つまり、`Container[Cat]`は`Container[Animal]`ではなく、逆もまた同様である。
+
+仮に`Container`が共変であったとすると、
+```scala
+class Container[A](value: A) {
+  private var _value: A = value
+  def getValue: A = _value
+  def setValue(value: A): Unit = {
+    _value = value
+  }
+}
+
+val catContainer: Container[Cat] = new Container(Cat("Felix"))
+val animalContainer: Container[Animal] = catContainer
+animalContainer.serValue(Dog("Spot"))
+val cat: Cat = catContainer.getValue
+```
+みたいなこと(`Dog`を`Cat`に割り当ててしまう)が可能になってしまう。
+
+### 他の例
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
