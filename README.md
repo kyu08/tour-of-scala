@@ -497,10 +497,26 @@ val lionContainer = new PetContainer[Lion](new Lion)
 
 例よくわかんなかった
 
+# 内部クラス
+クラスの中に定義されたクラスのこと。
+Graph class 内に Node class が定義されているとき、
+```scala 
+val graph1 = new Graph()
+val node1: graph1.node = graph1.create
+val graph2 = new Graph()
+val node2: graph2.node = graph2.create
+```
 
-
-
-
+node1 と node2 は別のもの
+同じものとして扱いたい場合は
+```scala
+// @Graph class
+// before
+List[Node]
+// after
+List[Graph#Node]
+```
+とする。
 
 
 
