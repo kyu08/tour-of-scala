@@ -521,7 +521,15 @@ List[Graph#Node]
 # 抽象型メンバー
 トレイトや抽象クラスは抽象型メンバーをもつことができる。
 
-
+# 複合型
+複数の型のサブタイプであることは複合型を用いて表現できる。
+複合型とはオブジェクトの型同士を重ねること。
+そんなときはこう。
+```scala
+def cloneAndReset(obj: Cloneable with Resetable): Cloneable = {
+  // ...
+}
+```
 
 
 
