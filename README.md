@@ -531,7 +531,25 @@ def cloneAndReset(obj: Cloneable with Resetable): Cloneable = {
 }
 ```
 
+# 自分型
+自分型は直接継承していなくてもトレイトがほかのトレイトにミックスインされていることを宣言する方法
+これにより、依存先のメンバをimportなしで利用できる。
+```scala
+trait User {
+  def username: String
+}
 
+trait Tweeter {
+  // 自分型宣言
+  this: User =>
+  def tweet(tweetText: String) = println(s"$username: $tweetText") // username がつかえる！！！
+}
+
+class VerifiedTweeter(val ...) extends Tweeter with User {
+  // ...
+}
+```
+`VerifiedTweeter`において、 Tweeter も User も 継承する必要があることに注意。
 
 
 
