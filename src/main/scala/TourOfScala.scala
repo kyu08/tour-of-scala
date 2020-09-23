@@ -1,33 +1,14 @@
 object TourOfScala extends App {
   println("===================")
-  class Adder(val number: Int) {
-    def hoge(num: Int): Int = number + num
+  case class Vec(x: Double, y: Double) {
+    def add(that: Vec) = Vec(this.x + that.x, this.y + that.y)
   }
 
-  abstract class Monoid[A] {
-    def add(x: A, y: A): A
-    def unit: A
-  }
+  val vector1 = Vec(1.0, 1.0)
+  val vector2 = Vec(2.0, 2.0)
 
-  object ImplicitTest {
-   implicit val stringMonoid: Monoid[String] = new Monoid[String] {
-     def add(x: String, y: String): String = x concat y
-     def unit: String = ""
-   }
-   implicit val intMonoid: Monoid[Int] = new Monoid[Int] {
-     def add(x: Int, y: Int): Int = x + y
-     def unit: Int = 0
-   }
-
-    def sum[A](xs: List[A])(implicit m: Monoid[A]): A = {
-      if (xs.isEmpty) m.unit
-      else m.add(xs.head, sum(xs.tail))
-    }
-
-    println(sum(List(1, 2, 3)))
-    println(sum(List("a", "b", "c")))
-  }
-
-
+  val vector3 = vector1 add vector2
+  println(vector3.x)  // 3.0
+  println(vector3.y)  // 3.0
   println("===================")
 }
