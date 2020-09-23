@@ -592,6 +592,9 @@ object ImplicitTest {
 ## 疑問
 [それ以降](https://docs.scala-lang.org/ja/tour/implicit-conversions.html)よくわからなかった。
 
+# ポリモーフィックメソッド
+わかった
+
 
 
 
