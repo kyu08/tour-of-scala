@@ -647,15 +647,51 @@ hello
 // [warn] 1 deprecation (since hogehogehoge); re-run with -deprecation for details
 ```
 
+# パッケージとインポート
+## パッケージの作成
+Scala ファイルの先頭で1つ以上のパッケージ名を宣言することでパッケージが作成される。
 
+```scala
+package users
 
+class User
 
+```
 
+**パッケージと Scala ファイルが含まれているディレクトリは同じ名前をつける習慣がある。**
 
+こんな感じでネストさせることもできる。
+```scala
+package users {
+  package administrators {
+    class NormalUser
+  }
+  package normalusers {
+    class NormalUser
+  }
+}
+```
 
+## インポート
+`import`句は他のパッケージのメンバにアクセスするためのものである。**同じパッケージのメンバにアクセスする際は必要ない。**
 
+```scala
+import users._  // import everything from users package
+import users.User  //  import User from users package
+import users.{User, UserPreferences}  // import only selected member
+import users.{UserPreferences => UPrefs}  // import A as B
+```
 
+`import`句はどこでも使える。
 
+名前が競合するようなパッケージをプロジェクトのルートからインポートする必要があるときは、パッケージ名の前に`_root_`をつける。
+
+```scala
+package accounts
+
+import _root_.users._
+
+```
 
 
 
