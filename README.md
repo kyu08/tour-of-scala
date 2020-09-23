@@ -638,6 +638,26 @@ whileLoop (i > 0) {
   i -= 1
 }  // prints 2 1
 
+# アノテーション
+メソッドが実行されたらコンパイラに警告を出力させる。
+```scala
+@deprecation("deprecation message", "warning!!!")
+def hello = "hola"
+hello
+// [warn] 1 deprecation (since hogehogehoge); re-run with -deprecation for details
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
