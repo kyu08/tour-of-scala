@@ -616,8 +616,27 @@ Scalaに演算子はない。すべてメソッド。
 ```
 中置記法使った方が見やすいこともあるので考慮しよう。
 
+# 名前渡しパラメータ
+名前渡しパラメータは使用されるときまで評価されない。
+対して値渡しパラメータの利点は1度しか評価されない点。
+```scala
+def cal(input: => Int) = input * 44
+```
+引きとして関数を渡した際に`println()`とかが正しいタイミングで表示されるために使ったりする
+あとは、計算量が多かったり通信を伴う関係で時間がかかる場合に名前渡しパラメータを使うとパフォーマンス改善の面でメリットがあることがある。
 
+def whileLoop(condition: => Boolean)(body: => Unit): Unit =
+  if (condition) {
+    body
+    whileLoop(condition)(body)
+  }
 
+var i = 2
+
+whileLoop (i > 0) {
+  println(i)
+  i -= 1
+}  // prints 2 1
 
 
 
